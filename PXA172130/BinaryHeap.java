@@ -88,7 +88,9 @@ public class BinaryHeap<T extends Comparable<? super T>> {
  }
 
  public T peek() { /* return null if pq is empty */
-	return null;
+	if(size==0)
+		 return null;
+	return pq[0];
  }
 
  /** pq[i] may violate heap order with parent */
