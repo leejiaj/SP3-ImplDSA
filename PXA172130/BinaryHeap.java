@@ -37,23 +37,54 @@ public class BinaryHeap<T extends Comparable<? super T>> {
  }
 
  public void add(T x) throws Exception { /* throw exception if pq is full */
+	 internalAdd(x);
+ }
+ 
+ private void internalAdd(T x) throws Exception
+ {
 	 if(size==pq.length)
 		 throw new Exception("Priority queue is full");
 	 pq[size] = x;
 	 percolateUp(size);
 	 size++;
  }
-
  public boolean offer(T x) { /* return false if pq is full */
-	return false;
+	 try
+	 {
+		 internalAdd(x);
+		 return true;
+	 }
+	 catch(Exception e)
+	 {
+		 return false;
+	 }
  }
 
- public T remove() { /* throw exception if pq is empty */
-	return null;
+ public T remove() throws Exception { /* throw exception if pq is empty */
+	return internalRemove();
+ }
+ 
+ private T internalRemove() throws Exception
+ {
+	 if(size==0)
+		 throw new Exception("Priority queue is empty");
+	T min = pq[0];
+	pq[0] = pq[size-1];
+	size--;
+	percolateDown(0);
+	return min;
  }
 
  public T poll() { /* return null if pq is empty */
-	return null;
+	 try
+	 {
+		 T x = internalRemove();
+		 return x;
+	 }
+	 catch(Exception e)
+	 {
+		 return null;
+	 }
  }
 
  public T peek() { /* return null if pq is empty */
@@ -73,6 +104,22 @@ public class BinaryHeap<T extends Comparable<? super T>> {
 
  /** pq[i] may violate heap order with children */
  void percolateDown(int i) { /* to be implemented */
+	 T x = pq[i];
+	 int c = leftChild(i);
+	 while(c<=size-1)
+	 {
+		 if(c<size-1 && pq[c].compareTo(pq[c+1])>0)
+		 {
+			 c++;
+		 }
+		 if(x.compareTo(pq[c])<=0)
+			 break;
+
+		 pq[i] = pq[c];
+		 i =c;
+		 c = leftChild(i);
+	 }
+	 pq[i]= x;
  }
 
  void printBinaryHeap()
@@ -155,16 +202,19 @@ public class BinaryHeap<T extends Comparable<? super T>> {
  
  public static void main(String[] args) throws Exception
  {
-	 Integer[] a = new Integer[5];
+	 Integer[] a = new Integer[2];
 	 BinaryHeap<Integer> obj = new BinaryHeap<Integer>(a);
 	 obj.add(1);
 	 obj.printBinaryHeap();
 	 obj.add(4);
 	 obj.printBinaryHeap();
-	 obj.add(5);
+	 obj.remove();
 	 obj.printBinaryHeap();
-	 obj.add(3);
+	 obj.remove();
 	 obj.printBinaryHeap();
-
+	 obj.poll();
+	 /*obj.printBinaryHeap();
+	 obj.remove();
+	 obj.printBinaryHeap();*/
  }
 }
