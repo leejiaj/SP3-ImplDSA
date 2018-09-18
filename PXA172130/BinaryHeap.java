@@ -44,7 +44,7 @@ public class BinaryHeap<T extends Comparable<? super T>> {
  {
 	 if(size==pq.length)
 		 throw new Exception("Priority queue is full");
-	 pq[size] = x;
+	 move(size,x);
 	 percolateUp(size);
 	 size++;
  }
@@ -69,7 +69,7 @@ public class BinaryHeap<T extends Comparable<? super T>> {
 	 if(size==0)
 		 throw new Exception("Priority queue is empty");
 	T min = pq[0];
-	pq[0] = pq[size-1];
+	move(0,pq[size-1]);
 	size--;
 	percolateDown(0);
 	return min;
@@ -98,10 +98,10 @@ public class BinaryHeap<T extends Comparable<? super T>> {
 	 T x = pq[i];
 	 while((pq[parent(i)].compareTo(x)>0) && i>0)
 	 {
-		 pq[i] = pq[parent(i)];
+		 move(i,pq[parent(i)]);
 		 i=parent(i);
 	 }
-	 pq[i]=x;
+	 move(i,x);
  }
 
  /** pq[i] may violate heap order with children */
@@ -121,7 +121,7 @@ public class BinaryHeap<T extends Comparable<? super T>> {
 		 i =c;
 		 c = leftChild(i);
 	 }
-	 pq[i]= x;
+	 move(i,c);
  }
 
  void printBinaryHeap()
