@@ -1,3 +1,12 @@
+/**
+ * @author Priyanka Awaraddi
+ * @author Leejia James
+ *
+ * Implementing bounded-size Binary Heap
+ *
+ * Ver 1.0: 2018/09/18
+ */
+
 package PXA172130;
 
 //Starter code for bounded-size Binary Heap implementation
