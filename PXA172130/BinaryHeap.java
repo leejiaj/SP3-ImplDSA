@@ -157,10 +157,10 @@ public class BinaryHeap<T extends Comparable<? super T>> {
 	/** pq[i] may violate heap order with parent */
 	void percolateUp(int i) { 
 		T x = pq[i];
-		while((pq[parent(i)].compareTo(x) > 0) && i > 0)
+		while(comp.compare(pq[parent(i)],x) > 0 && i > 0)
 		{
 			move(i,pq[parent(i)]);
-			i=parent(i);
+			i = parent(i);
 		}
 		move(i,x);
 	}
@@ -171,11 +171,11 @@ public class BinaryHeap<T extends Comparable<? super T>> {
 		int c = leftChild(i);
 		while(c <= size-1)
 		{
-			if(c < size-1 && pq[c].compareTo(pq[c+1]) > 0)
+			if(c < size-1 && comp.compare(pq[c], pq[c+1]) > 0)
 			{
 				c++;
 			}			
-			if(x.compareTo(pq[c]) <= 0)
+			if(comp.compare(x, pq[c]) <= 0)
 				break;
 			pq[i] = pq[c];
 			i = c;
